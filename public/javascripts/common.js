@@ -33,9 +33,11 @@
 		initialize: function(presetList){
 			self = this;
 			this.todo = presetList;
-			this.template = '<li data-id="{id}" data-title="{title}"><input type="checkbox" /> <span>{title}</span> <a href="#">Delete</a></li>';
-			this.activeTemplate = '';
-			this.doneTemplate = '';
+			this.template = {
+				base: '<li data-id="{id}" data-title="{title}"><input type="checkbox" /> <span>{title}</span> <a href="#">Delete</a></li>',
+				active: '',
+				done: ''
+			};
 			this.element = {
 				activeList: document.id('active-todo'),
 				doneList: document.id('done-todo'),
@@ -43,7 +45,6 @@
 				omnibox: document.id('omni-box'),
 				agent: document.id('agent')
 			};
-
 			this.setup();
 		},
 
@@ -59,10 +60,10 @@
 		populateLists: function(){
 			
 			// populate the active items
-			this.populateList(this.todo.active, this.activeTemplate, this.element.activeList);
+			this.populateList(this.todo.active, this.template.active, this.element.activeList);
 
 			// populate the inactive items
-			this.populateList(this.todo.done, this.doneTemplate, this.element.doneList);
+			this.populateList(this.todo.done, this.template.done, this.element.doneList);
 			
 			// make sure the checkboxes are checked
 			this.element.doneList.getElements('input').each(function(field){
@@ -73,8 +74,8 @@
 		populateList: function(items, template, listEl){
 			
 			// concat the template strings
-			items.each(function(item) {
-				template += this.template.substitute(item);
+			items.each(function(item){
+				template += this.template.base.substitute(item);
 			}, this);
 			listEl.adopt(Elements.from(template));
 			
@@ -105,7 +106,7 @@
 			
 			// Can't add empty items
 			if (itemFrom.get('value').trim() !== ''){
-				var item = this.template.substitute(itemData);
+				var item = this.template.base.substitute(itemData);
 				
 				// Inject and flash
 				Elements.from(item).inject(this.element.activeList, 'top').highlight();
