@@ -1,5 +1,8 @@
 Todolist::Application.routes.draw do
   root :to => "home#index"
-  resources :lists, :invitations
+  resources :invitations
+  resources :lists, :only => [:new, :show] do
+    put '/' => "lists#update"
+  end
   
 end

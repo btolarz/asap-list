@@ -10,6 +10,7 @@ class ListsController < ApplicationController
   end
   
   def new
+    
     @list = List.new
     @list.list_hash = ActiveSupport::SecureRandom.hex(3)
     respond_to do |format|
@@ -22,30 +23,32 @@ class ListsController < ApplicationController
   end
   
   def update
-    @list = List.find_by_list_hash(params[:id])
-    @list.list_items.destroy_all
+    @list = List.find_by_list_hash(params[:list_id])
     
-    params[:list] = {}
     
-    if params[:done]
-      @done_tasks = params[:done]
-      @done_tasks.each do |k,task|
-        task['status'] = "done"
-        task['id'] = nil
-      end
-      params[:list][:list_items_attributes] = @done_tasks
-      @list.update_attributes(params[:list])
+    case params[:mode]
+      when "add"
+        @item = ListItem.new
+        @item.hash_item = params[:id].split(":")[1]
+        @item.status = "active"
+        @item.title = params[:title]
+        @item.list_id = @list.id
+        @item.save
+      when "delete"
+        @item = @list.list_items.find_by_hash_item(params[:id].split(":")[1])
+        @item.destroy
+      when "done"
+        @item = @list.list_items.find_by_hash_item(params[:id].split(":")[1])
+        @item.status = "done"
+        @item.save
+      when "active"
+        @item = @list.list_items.find_by_hash_item(params[:id].split(":")[1])
+        @item.status = "active"
+        @item.save
+      else
+      
     end
     
-    if params[:active]
-      @active_tasks = params[:active]
-      @active_tasks.each do |k,task|
-        task['status'] = "active"
-        task['id'] = nil
-      end
-      params[:list][:list_items_attributes] = @active_tasks
-      @list.update_attributes(params[:list])
-    end
     render :text => "var ok = 'ok';"
   end
   
