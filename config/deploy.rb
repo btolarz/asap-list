@@ -8,7 +8,7 @@ set :applicationdir, "/home/#{user}/#{application}"  # The standard Dreamhost se
 
 # version control config
 set :scm, 'git'
-set :repository,  "git@github.com:oskarkrawczyk/asap-list.git"
+set :repository,  "git@github.com:btolarz/asap-list.git"
 set :deploy_via, :remote_cache
 set :git_enable_submodules, 0 # if you have vendored rails
 set :branch, 'master'
