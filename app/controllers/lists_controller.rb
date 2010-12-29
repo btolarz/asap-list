@@ -12,10 +12,18 @@ class ListsController < ApplicationController
   def new
     
     @list = List.new
-    @list.list_hash = ActiveSupport::SecureRandom.hex(3)
+    
+    tmp_hash = ActiveSupport::SecureRandom.hex(3)
+    
+    while List.where(:list_hash => tmp_hash).count > 0 
+      tmp_hash = ActiveSupport::SecureRandom.hex(3)
+    end
+    
+    @list.list_hash = tmp_hash
+    
     respond_to do |format|
       if @list.save
-        format.html { redirect_to list_path(@list.list_hash) }
+        format.html { redirect_to "/#{@list.list_hash}" }
         format.xml { head :ok }
         format.json { @list.to_json }
       end

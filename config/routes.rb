@@ -5,4 +5,6 @@ Todolist::Application.routes.draw do
     put '/' => "lists#update"
   end
   
+  match "/:id" => "lists#show"
+  
 end
