@@ -1,5 +1,5 @@
 <% content_for :section_css do %>
-	<%= stylesheet_link_tag "iphone-section", :media => "only screen and (max-device-width: 480px)", :cache => false  %>
+	<%= stylesheet_link_tag "iphone-section.min", :media => "only screen and (max-device-width: 480px)", :cache => false  %>
 <% end %>
 
 <% content_for :script do %>
@@ -22,21 +22,6 @@ var todoLists = {
 			<% end %>
 		]
 };
-
-todoLists = {
-	active: [
-		{
-			id: 'asd',
-			title: 'Lorem ipsum sit amet dolor'
-		},
-	],
-	done: [
-			{
-				id: 'dsa',
-				title: 'Lorem ipsum sit amet dolor'
-			},
-	]
-}
 
 window.addEvents({
 	domready: function(){
