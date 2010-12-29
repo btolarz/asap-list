@@ -4,7 +4,7 @@ var todoLists = {
 		active: [
 		<% @list.list_items.where(:status => "active").each do |i| %>
 			{
-				id: '<%= i.id %>',
+				id: '<%= i.hash_item %>',
 				title: '<%= i.title %>'
 			},
 		<% end %>
@@ -12,7 +12,7 @@ var todoLists = {
 		done: [
 			<% @list.list_items.where(:status => "done").each do |i| %>
 				{
-					id: '<%= i.id %>',
+					id: '<%= i.hash_item %>',
 					title: '<%= i.title %>'
 				},
 			<% end %>
