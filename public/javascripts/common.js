@@ -50,7 +50,7 @@
 
 		setup: function(){
 			this.element.agent.set('tween', {
-				link: 'chain'
+				// link: 'chain'
 			});
 			this.populateLists();
 			this.moveFromList();
