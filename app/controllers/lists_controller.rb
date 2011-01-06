@@ -60,4 +60,11 @@ class ListsController < ApplicationController
     render :text => "var ok = 'ok';"
   end
   
+  def geckoboard
+    @list = List.find_by_list_hash(params[:list_id])
+    respond_to do |format|
+      format.xml
+    end
+  end
+  
 end

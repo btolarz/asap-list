@@ -3,6 +3,8 @@ Todolist::Application.routes.draw do
   resources :invitations
   resources :lists, :only => [:new, :show] do
     put '/' => "lists#update"
+    post "geckoboard"
+    get "geckoboard"
   end
   
   match "/:id" => "lists#show"
