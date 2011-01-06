@@ -1,4 +1,5 @@
 class ListsController < ApplicationController
+  skip_before_filter :verify_authenticity_token, :only => [:geckoboard]
   
   def show
     @list = List.find_by_list_hash(params[:id])
