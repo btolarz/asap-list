@@ -4,7 +4,7 @@ class ListsController < ApplicationController
     @list = List.find_by_list_hash(params[:id])
     respond_to do |format|
       format.html # index.html
-      format.xml { head :ok }
+      format.xml
       format.json { @list.to_json }
     end
   end
